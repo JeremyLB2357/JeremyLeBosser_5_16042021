@@ -1,0 +1,43 @@
+(5) [{…}, {…}, {…}, {…}, {…}]
+0:
+colors: (4) ["Tan", "Chocolate", "Black", "White"]
+description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+imageUrl: "http://localhost:3000/images/teddy_1.jpg"
+name: "Norbert"
+price: 2900
+_id: "5be9c8541c9d440000665243"
+__proto__: Object
+1:
+colors: (3) ["Pale brown", "Dark brown", "White"]
+description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+imageUrl: "http://localhost:3000/images/teddy_2.jpg"
+name: "Arnold"
+price: 3900
+_id: "5beaa8bf1c9d440000a57d94"
+__proto__: Object
+2:
+colors: ["Brown"]
+description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+imageUrl: "http://localhost:3000/images/teddy_3.jpg"
+name: "Lenny and Carl"
+price: 5900
+_id: "5beaaa8f1c9d440000a57d95"
+__proto__: Object
+3:
+colors: (3) ["Brown", "Blue", "Pink"]
+description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+imageUrl: "http://localhost:3000/images/teddy_4.jpg"
+name: "Gustav"
+price: 4500
+_id: "5beaabe91c9d440000a57d96"
+__proto__: Object
+4:
+colors: (3) ["Beige", "Tan", "Chocolate"]
+description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+imageUrl: "http://localhost:3000/images/teddy_5.jpg"
+name: "Garfunkel"
+price: 5500
+_id: "5beaacd41c9d440000a57d97"
+__proto__: Object
+length: 5
+__proto__: Array(0)
