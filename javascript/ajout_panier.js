@@ -1,26 +1,13 @@
+// on veut récupérer l'ID du produit
 function recuperationId(){
-    const idProduit = document.getElementById('produit').value;
-    console.log(idProduit);
+    //on récupère les données de l'Url via :
+    const queryString = window.location.search;
+    //on fragmente les paramètres de l'Url via :
+    const urlParams = new URLSearchParams(queryString);
+    //on récupère l'ID voulue via :
+    const idProduit = urlParams.get('id');
     return idProduit;
 }
-
-//on veut récupérer les valeur inscrites dans les inputs
-// const quantity = document.getElementById('quantity').value;
-// const color = document.getElementById('style').value;
-
-//les éléments de test :
-const buttonClear = document.getElementById('btn-clear');
-const buttonShow = document.getElementById('btn-show');
-
-buttonClear.addEventListener('click', function(){
-    window.localStorage.clear();
-    console.log('ok clear');
-});
-
-buttonShow.addEventListener('click', function() {
-    console.log(window.localStorage);
-});
-
 class objectColorQuantity {
     constructor(color, quantity){
         this.color = color;

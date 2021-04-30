@@ -1,4 +1,4 @@
-function recuperationId (){
+function adresseIdUnique(){
     //on récupère les données de l'Url via :
     const queryString = window.location.search;
     //on fragmente les paramètres de l'Url via :
@@ -50,9 +50,9 @@ function extraireUnOursonDeLaBDD(produits){
     listerStyleNounours(produits);
 }
 async function fillProducts(){
-    await fetch(recuperationId())
+    await fetch(adresseIdUnique())
     .then((response) => response.json())
-    .then((nounourses) => extraireUnOursonDeLaBDD(nounourses))
+    .then((nounours) => extraireUnOursonDeLaBDD(nounours))
 };
 //Et on déclenche le tout:
 fillProducts();
