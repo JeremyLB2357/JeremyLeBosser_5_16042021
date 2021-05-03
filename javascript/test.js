@@ -1,85 +1,67 @@
-function recuperationId(){
-    const idProduit = document.getElementById('produit').value;
-    console.log(idProduit);
-    return idProduit;
+function creerElement(IdContenant, tag, classe, classe2) {
+    const contenant = document.getElementsByClassName(IdContenant);
+    const newTag = document.createElement(tag);
+    let lastElem = contenant.length - 1;
+    contenant[lastElem].appendChild(newTag);
+    newTag.classList.add(classe, classe2);
 }
-
-//on veut récupérer les valeur inscrites dans les inputs
-// const quantity = document.getElementById('quantity').value;
-// const color = document.getElementById('style').value;
-
-//les éléments de test :
-const buttonClear = document.getElementById('btn-clear');
-const buttonShow = document.getElementById('btn-show');
-
-buttonClear.addEventListener('click', function(){
-    window.localStorage.clear();
-    console.log('ok clear');
-});
-
-buttonShow.addEventListener('click', function() {
-    console.log(window.localStorage);
-});
-
-class objectColorQuantity {
-    constructor(color, quantity){
-        this.color = color;
-        this.quantity = quantity;
-    }
+function creerStructureArticle() {
+    creerElement('liste-articles', 'div', 'article', 'row');
+    creerElement('article', 'div', 'col-3', 'article_description');
+    creerElement('article_description', 'h2', 'article_titre');
+    creerElement('article_description', 'p', 'article_style');
+    creerElement('article', 'div', 'col-1', 'article_image');
+    creerElement('article_image', 'img', 'image_ourson');
+    creerElement('article', 'div', 'col-2', 'article_choix');
+    creerElement('article_choix', 'p', 'article_quantite');
+    creerElement('article_choix', 'p', 'article_prix');
 }
-// on veut récupérer la couleur choisie et la quantité
-function createObjectColorQuantity(){
-    const quantity = document.getElementById('quantity').value;
-    const color = document.getElementById('style').value;
-    const object = new objectColorQuantity(color, quantity);
-    return object;
+function remplirStructureArticle(objetAPI, infoPanier) {
+    let titre = objetAPI.name;
+    let image = objetAPI.imageUrl;
+    let prix = objetAPI.price;
+    let style = infoPanier[0].color;
+    let nombre = infoPanier[0].quantity;
+    const contenantTitre = document.getElementsByClassName('article_titre');
+    contenantTitre[0].textContent = titre;
+    const contenantStyle = document.getElementsByClassName('article_style');
+    contenantStyle[0].textContent = style;
+    const contenantImage = document.getElementsByClassName('image_ourson');
+    contenantImage[0].setAttribute('src', image);
+    const contenantQuantite = document.getElementsByClassName('article_quantite');
+    contenantQuantite[0].textContent = 'Quantité: ' + nombre;
+    const contenantPrix = document.getElementsByClassName('article_prix');
+    contenantPrix[0].textContent = 'Prix: ' + prix + '€';
 }
-
-// on veut ajouter les éléments au panier (=localstorage)
-    //le produit est-il déjà dans le panier ?
-function isInCart(idProduit){
-    for (let i=0; i < window.localStorage.length; i++){
-        if (idProduit === window.localStorage.key(i)){
-            return true;
-        }
-    }
-    return false;
-}
-    //l'ID est dans le panier, la couleur a-t'elle déjà été choisie ?
-function isColorAlreadyChosen(color, idProduit){
-    //on récupère les élements du panier correspondant à l'ID choisie
-    let declinaisonOurson = JSON.parse(window.localStorage.getItem(idProduit));
-    for (let elem of declinaisonOurson){
-        if (elem.color === color){
-            return true;
-        }
-    }
-    return false;
-}
-//on ajoute la sélection au panier
-function addToCart(idProduit){
-    if (isInCart(idProduit)){
-        let colorSelected = document.getElementById('style').value;
-        let arrayQuantityAndColor = JSON.parse(window.localStorage.getItem(idProduit));
-        if (isColorAlreadyChosen(colorSelected, idProduit)){
-            for (let elem of arrayQuantityAndColor){
-                if (elem.color === colorSelected){
-                    elem.quantity = parseInt(elem.quantity) + parseInt(document.getElementById('quantity').value);
-                }
-            }
-        }else {
-            arrayQuantityAndColor.push(createObjectColorQuantity());
-        }
-        window.localStorage.removeItem(idProduit);
-        window.localStorage.setItem(idProduit, JSON.stringify(arrayQuantityAndColor));
-
-    } else{
-        let arrayQuantityAndColor = [createObjectColorQuantity()];
-        window.localStorage.setItem(idProduit, JSON.stringify(arrayQuantityAndColor));
+//on veut remplir la structure d'article que nous avons créé
+//titre, style, nombre et prix sachant que 
+//      on a dans localstorage : id = {style et nombre}
+//      on a dans l'API : id = {nom, image et prix}
+//on sépare les 2 recherches d'info
+//
+//  1)récupérer les id du localStorage
+let arrayIdPanier =['5be9c8541c9d440000665243'];
+function recuperationIdLocalStorage(){
+    for (let i=0; i < window.localStorage.length; i++) {
+        arrayIdPanier.push(window.localStorage.key(i));
     }
 }
 
-const buttonAddToCart = document.getElementById('btn-addtocart');
-buttonAddToCart.addEventListener('click', function(){
-    addToCart(recuperationId());
-})
+async function collectInfoPanier(idPanier) {
+    //on récupère les info du localstorage
+    let infoPanier = JSON.parse(window.localStorage.getItem(idPanier));
+    //on récupère les info de l'API
+    await fetch('http://localhost:3000/api/teddies/'+ idPanier)
+    .then((response) => response.json())
+    //on créé un article avec toutes les infos
+    .then((infoAPI) => remplirStructureArticle(infoAPI, infoPanier))
+}
+
+
+//idée générale
+//on récupère l'ID d'un produit dans le localstorage
+//on créé une structure globale
+creerStructureArticle();
+//on va chercher les éléments 1 à 1
+collectInfoPanier(arrayIdPanier);
+
