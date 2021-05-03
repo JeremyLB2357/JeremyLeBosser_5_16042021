@@ -1,8 +1,8 @@
 function creerElement(IdContenant, tag, classe, classe2) {
     const contenant = document.getElementsByClassName(IdContenant);
     const newTag = document.createElement(tag);
-    console.log(contenant[0]);
-    contenant[0].appendChild(newTag);
+    let lastElem = contenant.length - 1;
+    contenant[lastElem].appendChild(newTag);
     newTag.classList.add(classe, classe2);
 }
 function creerStructureArticle() {
@@ -15,55 +15,57 @@ function creerStructureArticle() {
     creerElement('article', 'div', 'col-2', 'article_choix');
     creerElement('article_choix', 'p', 'article_quantite');
     creerElement('article_choix', 'p', 'article_prix');
-    console.log('bloc article créé');
-    debugger;
 }
-function remplirStructureArticle(article, position) {
+
+function remplirStructureArticle(objetAPI, infoPanier, iteration) {
+    let titre = objetAPI.name;
+    let image = objetAPI.imageUrl;
+    let prix = objetAPI.price;
+    let style = infoPanier.color;
+    let nombre = infoPanier.quantity;
     const contenantTitre = document.getElementsByClassName('article_titre');
-    contenantTitre[position].textContent = 'article.title';
+    contenantTitre[iteration].textContent = titre;
     const contenantStyle = document.getElementsByClassName('article_style');
-    contenantStyle[position].textContent = 'article.style';
+    contenantStyle[iteration].textContent = style;
     const contenantImage = document.getElementsByClassName('image_ourson');
-    contenantImage[position].setAttribute('src', 'article.image');
+    contenantImage[iteration].setAttribute('src', image);
     const contenantQuantite = document.getElementsByClassName('article_quantite');
-    contenantQuantite[position].textContent = 'Quantité: ' + 'article.quantity';
+    contenantQuantite[iteration].textContent = 'Quantité: ' + nombre;
     const contenantPrix = document.getElementsByClassName('article_prix');
-    contenantPrix[position].textContent = 'Prix: ' + 'article.price' + '€';
-    console.log('structure remplie');
-    debugger;
+    contenantPrix[iteration].textContent = 'Prix: ' + prix + '€';
 }
-//on veut remplir la structure d'article que nous avons créé
-//titre, style, nombre et prix sachant que 
-//      on a dans localstorage : id = {style et nombre}
-//      on a dans l'API : id = {nom, image et prix}
-//on sépare les 2 recherches d'info
-//
-//  1)récupérer les id du localStorage
-let arrayIdPanier =['5be9c8541c9d440000665243'];
+
 function recuperationIdLocalStorage(){
+    let arrayIdPanier = [];
     for (let i=0; i < window.localStorage.length; i++) {
         arrayIdPanier.push(window.localStorage.key(i));
     }
+    return arrayIdPanier;
 }
 
-function creationArticle(infoPanier, infoAPI) {
-    let article = {
-            title: infoAPI.name,
-            style: infoPanier[0].color,
-            image: infoAPI.imageUrl,
-            nombre: infoPanier[0].quantity,
-            prix: infoAPI.price
-        };
-    console.log(article);
-}
-async function collectInfoPanier(idPanier) {
+async function collectInfoPanier(idPanier, infoPanier, iteration) {
     //on récupère les info du localstorage
-    let infoPanier = JSON.parse(window.localStorage.getItem(idPanier));
+    //let infoPanier = JSON.parse(window.localStorage.getItem(idPanier));
     //on récupère les info de l'API
     await fetch('http://localhost:3000/api/teddies/'+ idPanier)
     .then((response) => response.json())
     //on créé un article avec toutes les infos
-    .then((infoAPI) => creationArticle(infoPanier, infoAPI))
+    .then((infoAPI) => remplirStructureArticle(infoAPI, infoPanier, iteration))
 }
 
-collectInfoPanier(arrayIdPanier[0]);
+//pour chaque element du panier
+function parcoursLocalStorage() {
+    let arrayIdPanier = recuperationIdLocalStorage();
+    //on créé une variable qui sert d'itération pour remplir la dernière structure créée
+    let x = 0;
+    for (let elem of arrayIdPanier) {
+        let ensembleStyle = JSON.parse(window.localStorage.getItem(elem));
+        for (let i in ensembleStyle) {
+            creerStructureArticle();
+            collectInfoPanier(elem, ensembleStyle[i], x);
+            x++;
+        }
+    }
+}
+
+parcoursLocalStorage();
