@@ -88,3 +88,9 @@ buttonClearPanier.addEventListener('click', function(){
     window.localStorage.clear();
 })
 
+const boutonContinuerAchat = document.getElementById('btn-continushopping');
+boutonContinuerAchat.addEventListener('click', function() {
+    let newUrl = window.location.origin;
+    window.location = newUrl;
+})
+

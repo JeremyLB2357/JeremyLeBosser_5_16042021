@@ -56,3 +56,11 @@ async function fillProducts(){
 };
 //Et on déclenche le tout:
 fillProducts();
+
+//fonctionnement des boutons :
+const boutonModifierChoix = document.getElementById('btn-otherchoice');
+boutonModifierChoix.addEventListener('click', function() {
+    let newUrl = window.location.origin;
+    console.log(newUrl);
+    window.location = newUrl;
+})
