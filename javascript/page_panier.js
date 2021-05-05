@@ -54,7 +54,7 @@ async function collectInfoPanier(idPanier, infoPanier, iteration) {
 }
 
 //pour chaque element du panier
-function parcoursLocalStorage() {
+function affichageArticlesDuPanier() {
     let arrayIdPanier = recuperationIdLocalStorage();
     //on créé une variable qui sert d'itération pour remplir la dernière structure créée
     let x = 0;
@@ -68,4 +68,12 @@ function parcoursLocalStorage() {
     }
 }
 
-parcoursLocalStorage();
+affichageArticlesDuPanier();
+
+//fonctionnalité des boutons
+const buttonClearPanier = document.getElementById('btn-clearcart');
+buttonClearPanier.addEventListener('click', function(){
+    window.localStorage.clear();
+})
+
+
