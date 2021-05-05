@@ -16,6 +16,17 @@ function creerStructureArticle() {
     creerElement('article_choix', 'p', 'article_quantite');
     creerElement('article_choix', 'p', 'article_prix');
 }
+let prixTotal = 0;
+
+function financial(number){
+    return Number.parseFloat(number).toFixed(2);
+}
+
+function afficherPrixTotal(prix) {
+    prixTotal += prix;
+    let contenantPrixTotal = document.getElementById('prix-total');
+    contenantPrixTotal.textContent = financial(prixTotal / 100);
+}
 
 function remplirStructureArticle(objetAPI, infoPanier, iteration) {
     let titre = objetAPI.name;
@@ -32,7 +43,8 @@ function remplirStructureArticle(objetAPI, infoPanier, iteration) {
     const contenantQuantite = document.getElementsByClassName('article_quantite');
     contenantQuantite[iteration].textContent = 'Quantité: ' + nombre;
     const contenantPrix = document.getElementsByClassName('article_prix');
-    contenantPrix[iteration].textContent = 'Prix: ' + prix + '€';
+    contenantPrix[iteration].textContent = 'Prix: ' + financial(prix / 100) + '€';
+    afficherPrixTotal(prix);
 }
 
 function recuperationIdLocalStorage(){
@@ -75,5 +87,4 @@ const buttonClearPanier = document.getElementById('btn-clearcart');
 buttonClearPanier.addEventListener('click', function(){
     window.localStorage.clear();
 })
-
 
