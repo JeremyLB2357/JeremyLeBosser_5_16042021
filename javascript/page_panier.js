@@ -1,18 +1,27 @@
-function creerElement(IdContenant, tag, classe, classe2) {
+function creerElement(IdContenant, tag, classe, classe2, classe3) {
     const contenant = document.getElementsByClassName(IdContenant);
     const newTag = document.createElement(tag);
     let lastElem = contenant.length - 1;
     contenant[lastElem].appendChild(newTag);
-    newTag.classList.add(classe, classe2);
+    newTag.classList.add(classe, classe2, classe3);
+}
+
+function afficherPanierVide() {
+    let panier = window.localStorage.key(0);
+    if(panier === null){
+        console.log('le panier est vide');
+        const contenantMessage = document.getElementById('paragraph-prix-total');
+        contenantMessage.innerText = 'Votre panier est vide';
+    }
 }
 function creerStructureArticle() {
-    creerElement('liste-articles', 'div', 'article', 'row');
-    creerElement('article', 'div', 'col-3', 'article_description');
+    creerElement('liste-articles', 'div', 'article', 'row', 'm-2');
+    creerElement('article', 'div', 'col', 'article_description');
     creerElement('article_description', 'h2', 'article_titre');
     creerElement('article_description', 'p', 'article_style');
-    creerElement('article', 'div', 'col-1', 'article_image');
+    creerElement('article', 'div', 'col', 'article_image');
     creerElement('article_image', 'img', 'image_ourson');
-    creerElement('article', 'div', 'col-2', 'article_choix');
+    creerElement('article', 'div', 'col', 'article_choix');
     creerElement('article_choix', 'p', 'article_quantite');
     creerElement('article_choix', 'p', 'article_prix');
 }
@@ -41,9 +50,9 @@ function remplirStructureArticle(objetAPI, infoPanier, iteration) {
     const contenantImage = document.getElementsByClassName('image_ourson');
     contenantImage[iteration].setAttribute('src', image);
     const contenantQuantite = document.getElementsByClassName('article_quantite');
-    contenantQuantite[iteration].textContent = 'Quantité: ' + nombre;
+    contenantQuantite[iteration].textContent = 'Quantité : ' + nombre;
     const contenantPrix = document.getElementsByClassName('article_prix');
-    contenantPrix[iteration].textContent = 'Prix: ' + financial(prix / 100) + '€';
+    contenantPrix[iteration].textContent = 'Prix : ' + financial(prix / 100) + '€';
     afficherPrixTotal(prix);
 }
 
@@ -80,17 +89,26 @@ function affichageArticlesDuPanier() {
     }
 }
 
+afficherPanierVide();
 affichageArticlesDuPanier();
 
 //fonctionnalité des boutons
 const buttonClearPanier = document.getElementById('btn-clearcart');
 buttonClearPanier.addEventListener('click', function(){
     window.localStorage.clear();
+    alert('le panier a été vider');
+    window.location.reload();
 })
 
 const boutonContinuerAchat = document.getElementById('btn-continushopping');
 boutonContinuerAchat.addEventListener('click', function() {
     let newUrl = window.location.origin;
     window.location = newUrl;
+})
+
+const boutonCommander = document.getElementById('btn-commander');
+boutonCommander.addEventListener('click', function() {
+    const formulaireDeCommande = document.getElementById('formulaire-commande');
+    formulaireDeCommande.classList.replace('display-off', 'display-on');
 })
 

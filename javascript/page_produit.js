@@ -61,6 +61,5 @@ fillProducts();
 const boutonModifierChoix = document.getElementById('btn-otherchoice');
 boutonModifierChoix.addEventListener('click', function() {
     let newUrl = window.location.origin;
-    console.log(newUrl);
     window.location = newUrl;
 })

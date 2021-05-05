@@ -69,4 +69,5 @@ function addToCart(idProduit){
 const buttonAddToCart = document.getElementById('btn-addtocart');
 buttonAddToCart.addEventListener('click', function(){
     addToCart(recuperationId());
+    alert("L'article a bien été ajouté au panier!");
 })
