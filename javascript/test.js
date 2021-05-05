@@ -36,19 +36,19 @@ let infoFormulaire = {
 console.log(infoAEnvoyer);
 let test = JSON.stringify(infoAEnvoyer);
 
-async function envoyerCommande() {
+async function envoyerCommande(test2) {
     await fetch('http://localhost:3000/api/teddies/order', {  
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
             },
-        body: test
+        body: test2
     })
     .then(async response =>console.log(await response.json()))
 }
 
 const buttonEnvoyer = document.getElementById('btn-envoyer');
 buttonEnvoyer.addEventListener('click', function() {
-    envoyerCommande();
+    envoyerCommande(test);
     }
 );

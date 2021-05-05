@@ -1,5 +1,3 @@
-
-
 function recuperationPanier() {
     let arrayIdPanier = [];
     for (let i=0; i < window.localStorage.length; i++) {
@@ -37,24 +35,31 @@ function formatageDesInfoPourAPI(personne, idsPanier) {
 
 async function requetePost(info) {
     await fetch('http://localhost:3000/api/teddies/order', {  
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json'
-        },
-    body: info
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+            },
+        body: info
     })
-    .then(response =>console.log(response))
+    .then(async response =>console.log(await response.json()))
 }
 
-async function envoyerCommande() {
+function envoyerCommande() {
     const panier = recuperationPanier();
-    await recuperationCoordonnees()
-    .then ((response) => formatageDesInfoPourAPI(response, panier))
-    .then ((newresponse) => requetePost(newresponse))
-
+    const contact = recuperationCoordonnees();
+    const info = formatageDesInfoPourAPI(contact, panier);
+    console.log(panier);
+    console.log(contact);
+    console.log(info);
+    debugger;
+    requetePost(info);
 }
+
 const buttonValider = document.getElementById('btn-valide-commande');
-buttonValider.addEventListener('click', function() {
+buttonValider.addEventListener('click', function(event) {
+    console.log('bouton envoyer clické !');
+    event.preventDefault();
     envoyerCommande();
+    alert('la commande a été envoyée!')
     }
 );
