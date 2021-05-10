@@ -48,19 +48,28 @@ function extraireIdCommande(reponseAPI) {
     return array;
 }
 
-function ajoutInputFormulaire(name, value) {
+/*function ajoutInputFormulaire(name, value) {
     const form = document.getElementById('formulaire-test');
     const newInput = document.createElement('input');
     form.appendChild(newInput);
     newInput.setAttribute('type', 'hidden');
     newInput.setAttribute('name', name);
     newInput.setAttribute('value', value);
+}*/
+
+function setInputFormulaire(value) {
+    const input = document.getElementById('idcommande');
+    input.setAttribute('value', value)
 }
 
 function remplirInputFormulaire(reponseAPI) {
     const infoAEnvoyer = extraireIdCommande(reponseAPI);
-    ajoutInputFormulaire('idcommande', infoAEnvoyer[0]);
-    ajoutInputFormulaire('total', infoAEnvoyer[1]);
+    //ajoutInputFormulaire('idcommande', infoAEnvoyer[0]);
+    //ajoutInputFormulaire('total', infoAEnvoyer[1]);
+    const input1 = document.getElementById('idcommande');
+    input1.setAttribute('value', infoAEnvoyer[0]);
+    const input2 = document.getElementById('total');
+    input2.setAttribute('value', infoAEnvoyer[1]);
     console.log('formulaire rempli');
 }
 
@@ -95,7 +104,7 @@ async function envoyerCommande() {
 const buttonValider = document.getElementById('btn-valide-commande');
 buttonValider.addEventListener('click', function(event) {
     event.preventDefault();
-    envoyerCommande();
+    validerFormulaire();
     alert('la commande a été envoyée!')
     }
 );
