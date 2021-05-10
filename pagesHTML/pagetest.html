@@ -9,16 +9,19 @@
     
 </head>
 <body>
-    <form action="">
-        <label for="firstname">votre prénom</label>
-        <input type="text" name="firstname" id="firstname">
-        <label for="lastname">votre nom</label>
-        <input type="text" name="lastname" id="lastname">
-    </form>
-    <div>
-        <button id="btn-valider-form">valider la commande</button>
-        <button id="btn-envoyer">Envoyer la commande</button>
-    </div>
+    <fieldset>
+        <form id="formulaire-test" method="GET" action="./page_confirmation.html">
+            <label for="firstname">votre prénom</label>
+            <input type="text" name="firstname" id="firstname" value="Jérémy">
+            <label for="lastname">votre nom</label>
+            <input type="text" name="lastname" id="lastname" value="LB">
+            
+        </form>
+        <div>
+            <button id="btn-valider-form">valider</button>
+        </div>
+    </fieldset>
+    <button id="btn-envoyer">Envoyer la commande</button>
     <script src="../javascript/test.js"></script>
 </body>
 </html>

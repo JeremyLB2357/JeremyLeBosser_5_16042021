@@ -31,6 +31,46 @@ function formatageDesInfoPourAPI(personne, idsPanier) {
     return infoFormatee;
 }
 
+
+//il faut réaliser une requete post pour transmettre la réponse de L'API à la page de confirmation
+//pour cela, il faut créer un input invisible et y ajouter comme valeur la réponse de l'API
+//du coup le formulaire doit pointer vers la page de confirmation (cf: article journal du net)
+
+//on récupère l'ID dans le retour de l'API
+function extraireIdCommande(reponseAPI) {
+    const idCommande = reponseAPI.orderId;
+    const produitsCommande = reponseAPI.products;
+    let total = 0;
+    for (let i in produitsCommande) {
+        total += produitsCommande[i].price;
+    }
+    let array = [idCommande, total];
+    return array;
+}
+
+function ajoutInputFormulaire(name, value) {
+    const form = document.getElementById('formulaire-test');
+    const newInput = document.createElement('input');
+    form.appendChild(newInput);
+    newInput.setAttribute('type', 'hidden');
+    newInput.setAttribute('name', name);
+    newInput.setAttribute('value', value);
+}
+
+function remplirInputFormulaire(reponseAPI) {
+    const infoAEnvoyer = extraireIdCommande(reponseAPI);
+    ajoutInputFormulaire('idcommande', infoAEnvoyer[0]);
+    ajoutInputFormulaire('total', infoAEnvoyer[1]);
+    console.log('formulaire rempli');
+}
+
+async function validerFormulaire() {
+    await envoyerCommande()
+    .then(document.getElementById('formulaire-test').submit())
+}
+//on envoie le tout dans l'URL de la page de confirmation.
+
+
 //on envoie le tout à l'API
 
 async function requetePost(info) {
@@ -41,23 +81,19 @@ async function requetePost(info) {
             },
         body: info
     })
-    .then(async response =>console.log(await response.json()))
+    .then(response => response.json())
+    .then((newResponse) => remplirInputFormulaire(newResponse))
 }
 
-function envoyerCommande() {
+async function envoyerCommande() {
     const panier = recuperationPanier();
     const contact = recuperationCoordonnees();
     const info = formatageDesInfoPourAPI(contact, panier);
-    console.log(panier);
-    console.log(contact);
-    console.log(info);
-    debugger;
     requetePost(info);
 }
 
 const buttonValider = document.getElementById('btn-valide-commande');
 buttonValider.addEventListener('click', function(event) {
-    console.log('bouton envoyer clické !');
     event.preventDefault();
     envoyerCommande();
     alert('la commande a été envoyée!')

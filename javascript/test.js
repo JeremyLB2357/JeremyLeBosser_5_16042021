@@ -1,24 +1,3 @@
-//on récupère les informations du panier
-function recuperationPanier() {
-    let arrayIdPanier = [];
-    for (let i=0; i < window.localStorage.length; i++) {
-        arrayIdPanier.push(window.localStorage.key(i));
-    }
-    return arrayIdPanier;
-}
-//on récupère les coordonnées du formulaire
-function recuperationCoordonnees() {
-    const prenom = document.getElementById('firstname').value;
-    const nom = document.getElementById('lastname').value;
-    personne.firstName = prenom;
-    personne.lastName = nom;
-}
-const buttonValider = document.getElementById('btn-valider-form');
-buttonValider.addEventListener('click', function() {
-    recuperationCoordonnees();
-    console.log(personne)
-    }
-);
 
 //on envoie le tout à l'API
 let infoFormulaire = {
@@ -52,3 +31,11 @@ buttonEnvoyer.addEventListener('click', function() {
     envoyerCommande(test);
     }
 );
+
+//zone de test de l'affichage de la page de confirmation
+
+const form = document.getElementById('formulaire-test')
+const buttonTest = document.getElementById('btn-valider-form');
+buttonTest.addEventListener('click', function() {
+    form.submit();
+})
