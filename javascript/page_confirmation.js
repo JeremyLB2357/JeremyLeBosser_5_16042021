@@ -1,11 +1,8 @@
-const contenantRefCommande = document.getElementById('ref-commande');
-const contenantTotal = document.getElementById('prix-total');
-
 function financial(number){
     return Number.parseFloat(number).toFixed(2);
 }
 
-function afficherPrixEtId() {
+function recupererPrixEtId() {
     //on récupère les données de l'Url via :
     const queryString = window.location.search;
     //on fragmente les paramètres de l'Url via :
@@ -13,9 +10,12 @@ function afficherPrixEtId() {
     //on récupère l'ID voulue via :
     const idProduit = urlParams.get('idcommande');
     const total = urlParams.get('total');
-    contenantRefCommande.innerText = idProduit;
-    contenantTotal.innerText = financial(total / 100);
+    const array = [idProduit, total];
+    const contenantRefCommande = document.getElementById('ref-commande');
+    const contenantTotal = document.getElementById('prix-total');
+    contenantRefCommande.innerText = array[0];
+    contenantTotal.innerText = financial(array[1] / 100);
 }
 
-
+recupererPrixEtId();
 

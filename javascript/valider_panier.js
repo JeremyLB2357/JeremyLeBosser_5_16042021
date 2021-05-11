@@ -48,16 +48,7 @@ function extraireIdCommande(reponseAPI) {
     return array;
 }
 
-
-function remplirInputFormulaire(reponseAPI) {
-    const infoAEnvoyer = extraireIdCommande(reponseAPI);
-    const input1 = document.getElementById('idcommande');
-    input1.setAttribute('value', infoAEnvoyer[0]);
-    const input2 = document.getElementById('total');
-    input2.setAttribute('value', infoAEnvoyer[1]);
-    console.log('formulaire rempli');
-}
-
+//avec les info de l'API, on rempli un formulaire invisible
 function remplirFormulaireFantome(reponseAPI) {
     const infoAEnvoyer = extraireIdCommande(reponseAPI);
     const Input = document.getElementById('idcommande');
@@ -68,6 +59,7 @@ function remplirFormulaireFantome(reponseAPI) {
     return true;
 }
 
+//on transmet avec la method GET les info à la page de confirmation
 function validerFormulaireFantome(booleen) {
     if (booleen) {
         const form = document.getElementById('form-fantome');
