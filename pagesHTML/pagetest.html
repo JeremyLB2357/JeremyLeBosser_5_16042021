@@ -10,18 +10,21 @@
 </head>
 <body>
     <fieldset>
-        <form id="formulaire-test" method="GET" action="./page_confirmation.html">
+        <form id="formulaire-test" action="">
             <label for="firstname">votre prénom</label>
             <input type="text" name="firstname" id="firstname" value="Jérémy">
             <label for="lastname">votre nom</label>
-            <input type="text" name="lastname" id="lastname" value="LB">
-            
+            <input type="email" name="mail" id="mail" value="LB@test.com">
+            <label for="quantity">quantité :</label>
+            <input type="text" name="quantity" id="quantity">
         </form>
         <div>
-            <button id="btn-valider-form">valider</button>
+            <button id="btn">tester-moi</button>
         </div>
     </fieldset>
-    <button id="btn-envoyer">Envoyer la commande</button>
+    <div>
+        <button id="btn-page">change-moi de page</button>
+    </div>
     <script src="../javascript/test.js"></script>
 </body>
 </html>

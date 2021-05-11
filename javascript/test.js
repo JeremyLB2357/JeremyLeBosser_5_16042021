@@ -1,41 +1,47 @@
+//on créé des constantes type regex pour tester les inputs
+//on créé une fonction qui fait le test et qui retourne un booléen
+//en réponse à la fonction test, il y a 2 actions faire ou message d'erreur
 
-//on envoie le tout à l'API
-let infoFormulaire = {
-        firstName: 'Jérémy',
-        lastName: 'LB',
-        email: 'test@jlb.fr',
-        address: '4 rue du test',
-        city: 'Rennes'
-    }
-    let arrayProducts = ['5be9c8541c9d440000665243', '5beaa8bf1c9d440000a57d94'];
-    let infoAEnvoyer = {
-        contact: infoFormulaire,
-        products: arrayProducts
-    }
-console.log(infoAEnvoyer);
-let test = JSON.stringify(infoAEnvoyer);
+const input1 = 'jeremy';
+const input2 = 18;
 
-async function envoyerCommande(test2) {
-    await fetch('http://localhost:3000/api/teddies/order', {  
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-            },
-        body: test2
-    })
-    .then(async response =>console.log(await response.json()))
+const regexQuantity = new RegExp(/^[1-9]$|[1-9]{1,3}/);
+const regexNom = new RegExp(/[a-zA-Zéèçï-]+/);
+const regexMail = new RegExp(/\S+@\S+\.\S+/);
+const regexPostal = new RegExp(/[a-zA-Z0-9\s]*/);
+const regexVille = new RegExp(/[a-zA-Z\s-]*/);
+
+
+function verificationQuantity(input) {
+    if (regexQuantity.test(input)) {
+        console.log("l'input est une quantité");
+    } else {
+        console.log("l'input n'est pas un nombre valide");
+    }
 }
 
-const buttonEnvoyer = document.getElementById('btn-envoyer');
-buttonEnvoyer.addEventListener('click', function() {
-    envoyerCommande(test);
+function verificationNomPrenom(input) {
+    if (regexNom.test(input)) {
+        console.log("l'input est valide")
+    } else {
+        console.log("l'input n'est pas valide")
     }
-);
+}
 
-//zone de test de l'affichage de la page de confirmation
+const bouton = document.getElementById('btn');
+bouton.addEventListener('click', function() {
+    const container = document.getElementById('quantity');
+    const valeurTest = container.value;
+    console.log(valeurTest);
+    verificationQuantity(valeurTest);
+})
 
-const form = document.getElementById('formulaire-test')
-const buttonTest = document.getElementById('btn-valider-form');
-buttonTest.addEventListener('click', function() {
-    form.submit();
+
+const boutonModifPage = document.getElementById('btn-page');
+boutonModifPage.addEventListener('click', function() {
+    console.log(window.location.origin);
+    const newUrl = window.location.origin + '/pagesHTML/page_confirmation.html?idcommande=' + '45709' + '&total=' + '14500';
+    console.log(newUrl);
+    debugger;
+    window.location = newUrl;
 })
