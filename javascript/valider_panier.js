@@ -69,7 +69,14 @@ function validerFormulaireFantome(booleen) {
         console.log('le formulaire est vide')
     }
 }
-
+//a la place du formulaire fantome on fait plus propre :
+function redirectionPageConfirmation(reponseAPI) {
+    const infoAEnvoyer = extraireIdCommande(reponseAPI);
+    const newUrl = window.location.origin + '/pagesHTML/page_confirmation.html?idcommande=' + infoAEnvoyer[0] + '&total=' + infoAEnvoyer[1];
+    console.log(newUrl);
+    debugger;
+    window.location = newUrl;
+}
 //on envoie le tout à l'API
 
 async function requeteNouvelleCommandeAPI(info) {
@@ -81,8 +88,7 @@ async function requeteNouvelleCommandeAPI(info) {
         body: info
     })
     .then(async response => response.json())
-    .then(ApiResponse => remplirFormulaireFantome(ApiResponse))
-    .then(newResponse => validerFormulaireFantome(newResponse))
+    .then(ApiResponse => redirectionPageConfirmation(ApiResponse))
 }
 
 function envoyerCommande() {
