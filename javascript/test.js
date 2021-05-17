@@ -5,7 +5,7 @@
 const input1 = 'jeremy';
 const input2 = 18;
 
-const regexQuantity = new RegExp(/^[1-9]$|[1-9]{1,3}/);
+//const regexQuantity = new RegExp(/^[1-9]$|[1-9]{1,3}/);
 const regexNom = new RegExp(/[a-zA-Zéèçï-]+/);
 const regexMail = new RegExp(/\S+@\S+\.\S+/);
 const regexPostal = new RegExp(/[a-zA-Z0-9\s]*/);
@@ -13,11 +13,14 @@ const regexVille = new RegExp(/[a-zA-Z\s-]*/);
 
 
 function verificationQuantity(input) {
-    if (regexQuantity.test(input)) {
+    const regexQuantity = new RegExp(/[1-9]{1,2}/);
+    console.log(regexQuantity.test(input));
+    /*if (regexQuantity.test(input)) {
         console.log("l'input est une quantité");
+        return(parseInt(input, 10));
     } else {
         console.log("l'input n'est pas un nombre valide");
-    }
+    }*/
 }
 
 function verificationNomPrenom(input) {

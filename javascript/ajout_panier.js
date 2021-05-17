@@ -14,9 +14,19 @@ class objectColorQuantity {
         this.quantity = quantity;
     }
 }
+
+function verificationQuantity(input) {
+    //regex vérifie les nombres de 1 à 100
+    const regexQuantity = new RegExp(/^[1-9]?[0-9]{1}$|^100$/);
+    if (regexQuantity.test(input)) {
+        return(true);
+    } else {
+        return(false);
+    }
+}
 // on veut récupérer la couleur choisie et la quantité
 function createObjectColorQuantity(){
-    const quantity = document.getElementById('quantity').value;
+    const quantity = parseInt(document.getElementById('quantity').value, 10);
     const color = document.getElementById('style').value;
     const object = new objectColorQuantity(color, quantity);
     return object;
@@ -68,6 +78,12 @@ function addToCart(idProduit){
 
 const buttonAddToCart = document.getElementById('btn-addtocart');
 buttonAddToCart.addEventListener('click', function(){
-    addToCart(recuperationId());
-    alert("L'article a bien été ajouté au panier!");
+    const quantityInput = document.getElementById('quantity').value;
+    if (verificationQuantity(quantityInput)) {
+        addToCart(recuperationId());
+        alert("L'article a bien été ajouté au panier!");
+    } else {
+        alert("La quantité renseignée n'est pas valide");
+    }
+    
 })
