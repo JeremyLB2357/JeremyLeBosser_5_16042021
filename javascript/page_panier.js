@@ -43,6 +43,7 @@ function remplirStructureArticle(objetAPI, infoPanier, iteration) {
     let prix = objetAPI.price;
     let style = infoPanier.color;
     let nombre = infoPanier.quantity;
+    let prixTotal = prix * nombre;
     const contenantTitre = document.getElementsByClassName('article_titre');
     contenantTitre[iteration].textContent = titre;
     const contenantStyle = document.getElementsByClassName('article_style');
@@ -53,7 +54,7 @@ function remplirStructureArticle(objetAPI, infoPanier, iteration) {
     contenantQuantite[iteration].textContent = 'Quantité : ' + nombre;
     const contenantPrix = document.getElementsByClassName('article_prix');
     contenantPrix[iteration].textContent = 'Prix : ' + financial(prix / 100) + '€';
-    afficherPrixTotal(prix);
+    afficherPrixTotal(prixTotal);
 }
 
 function recuperationIdLocalStorage(){
