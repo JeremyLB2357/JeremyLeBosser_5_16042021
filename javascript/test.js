@@ -6,11 +6,10 @@ const input1 = 'jeremy';
 const input2 = 18;
 
 //const regexQuantity = new RegExp(/^[1-9]$|[1-9]{1,3}/);
-const regexNom = new RegExp(/[a-zA-Zéèçï-]+/);
-const regexMail = new RegExp(/\S+@\S+\.\S+/);
-const regexPostal = new RegExp(/[a-zA-Z0-9\s]*/);
-const regexVille = new RegExp(/[a-zA-Z\s-]*/);
-
+const regexNom = new RegExp(/^[A-Z][A-Za-zÀ-ÿ-]*$/);
+const regexMail = new RegExp(/^\S*[^\.\s]@[^\.\s]+\.{1}[^\.\s]\S+[^\.\s]$/);
+const regexPostal = new RegExp(/^[\wÀ-ÿ][\s\wÀ-ÿ,-]*[\wÀ-ÿ]$/);
+const regexVille = new RegExp(/^[a-zA-ZÀ-ÿ][a-zA-ZÀ-ÿ\s-]*[a-zA-ZÀ-ÿ]$/);
 
 function verificationQuantity(input) {
     const regexQuantity = new RegExp(/[1-9]{1,2}/);
@@ -24,19 +23,26 @@ function verificationQuantity(input) {
 }
 
 function verificationNomPrenom(input) {
-    if (regexNom.test(input)) {
+    console.log(regexNom.test(input));
+    /*if (regexNom.test(input)) {
         console.log("l'input est valide")
     } else {
         console.log("l'input n'est pas valide")
-    }
+    }*/
+}
+function verificationMail(input) {
+    console.log(regexMail.test(input));
+}
+function verificationPostal(input) {
+    console.log(regexPostal.test(input));
 }
 
 const bouton = document.getElementById('btn');
 bouton.addEventListener('click', function() {
-    const container = document.getElementById('quantity');
+    const container = document.getElementById('firstname');
     const valeurTest = container.value;
     console.log(valeurTest);
-    verificationQuantity(valeurTest);
+    verificationPostal(valeurTest);
 })
 
 
@@ -48,3 +54,9 @@ boutonModifPage.addEventListener('click', function() {
     debugger;
     window.location = newUrl;
 })
+
+const inputFollow = document.getElementById('mail');
+inputFollow.addEventListener('change', function() {
+    verificationNomPrenom(inputFollow.value);
+})
+

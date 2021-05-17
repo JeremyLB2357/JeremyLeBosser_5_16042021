@@ -109,9 +109,37 @@ function envoyerCommande() {
 *   une fois le formulaire rempli, on l'envoi en GET à la page de confirmation
 */
 
+//vérification du formulaire
+const regexNom = new RegExp(/^[A-Z][A-Za-zÀ-ÿ-]*$/);
+const regexMail = new RegExp(/^\S*[^\.\s]@[^\.\s]+\.{1}[^\.\s]\S+[^\.\s]$/);
+const regexPostal = new RegExp(/^[\wÀ-ÿ][\s\wÀ-ÿ,-]*[\wÀ-ÿ]$/);
+const regexVille = new RegExp(/^[a-zA-ZÀ-ÿ][a-zA-ZÀ-ÿ\s-]*[a-zA-ZÀ-ÿ]$/);
+
+const classeFormulaire = ['firstname', 'lastname', 'email', 'adresse', 'ville'];
+
+function checkFormulaire(classe, test) {
+    const inputAChecker = document.getElementById(classe);
+    const regexTesteur = test;
+    if (regexTesteur.test(inputAChecker.value)) {
+        inputAChecker.style.color = '#000000';
+        return true;
+    } else {
+        inputAChecker.style.color = '#FF0000';
+    }
+}
+
 const buttonValider = document.getElementById('btn-valide-commande');
 buttonValider.addEventListener('click', function(event) {
     event.preventDefault();
-    envoyerCommande()
+    if (!checkFormulaire(classeFormulaire[0], regexNom) ||
+        !checkFormulaire(classeFormulaire[1], regexNom) ||
+        !checkFormulaire(classeFormulaire[2], regexMail) ||
+        !checkFormulaire(classeFormulaire[3], regexPostal) ||
+        !checkFormulaire(classeFormulaire[4], regexVille)) {
+        alert('le formulaire est faux');
+    } else {
+        console.log('le formulaire est valide');
+    }
+    //envoyerCommande()
     }
 );
