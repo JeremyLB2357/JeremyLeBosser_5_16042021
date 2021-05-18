@@ -18,4 +18,4 @@ function recupererPrixEtId() {
 }
 
 recupererPrixEtId();
-
+window.localStorage.clear();

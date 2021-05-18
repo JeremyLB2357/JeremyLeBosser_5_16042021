@@ -85,7 +85,7 @@ async function requeteNouvelleCommandeAPI(info) {
         headers: {
             'Content-Type': 'application/json'
             },
-        body: info
+        body: false
     })
     .then(async response => response.json())
     .then(ApiResponse => redirectionPageConfirmation(ApiResponse))
@@ -96,18 +96,7 @@ function envoyerCommande() {
     const contact = recuperationCoordonnees();
     const info = formatageDesInfoPourAPI(contact, panier);
     requeteNouvelleCommandeAPI(info);
-    console.log('requete POST effectuée');
-    debugger;
 }
-
-/*lors du click sur le bouton valider la commande on lance le tout :
-*   on récupère les infos à envoyer
-*   on formate les info à envoyer
-*   on envoye les info à l'API
-*   une fois que l'on a une réponse, on extrait l'ID de commande de la réponse
-*   on rempli le formulaire fantome avec l'ID obtenu et le prix total
-*   une fois le formulaire rempli, on l'envoi en GET à la page de confirmation
-*/
 
 //vérification du formulaire
 const regexNom = new RegExp(/^[A-Z][A-Za-zÀ-ÿ-]*$/);
@@ -139,7 +128,6 @@ buttonValider.addEventListener('click', function(event) {
         alert('le formulaire est faux');
     } else {
         console.log('le formulaire est valide');
+        envoyerCommande();
     }
-    //envoyerCommande()
-    }
-);
+});

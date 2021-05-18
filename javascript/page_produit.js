@@ -14,23 +14,28 @@ function afficherNom(produits){
     let titre = produits.name;
     contenant.textContent = titre;
 }
+//fonctions pour afficher les nombres avec 2 décimales
 function financial(number){
     return Number.parseFloat(number).toFixed(2);
 }
+
 function afficherPrix(produits){
     const contenant = document.getElementById('prix_ourson');
     let prix = produits.price / 100;
     contenant.textContent = 'Prix unitaire: ' + financial(prix) + '€';
 }
+
 function afficherDescription(produits){
     const contenant = document.getElementById('description_ourson');
     let description = produits.description;
     contenant.textContent = description;
 }
+
 function afficherPhotoDesNounours(produits){
     const image = document.getElementById('image_ourson');
     image.setAttribute("src", produits.imageUrl);
 }
+
 function listerStyleNounours(produits){
     const styleDispo = produits.colors;
     const contenant = document.getElementById('style');

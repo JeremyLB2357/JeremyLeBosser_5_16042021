@@ -8,6 +8,7 @@ function recuperationId(){
     const idProduit = urlParams.get('id');
     return idProduit;
 }
+
 class objectColorQuantity {
     constructor(color, quantity){
         this.color = color;
