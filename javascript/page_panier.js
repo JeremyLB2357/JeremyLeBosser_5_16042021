@@ -66,8 +66,6 @@ function recuperationIdLocalStorage(){
 }
 
 async function collectInfoPanier(idPanier, infoPanier, iteration) {
-    //on récupère les info du localstorage
-    //let infoPanier = JSON.parse(window.localStorage.getItem(idPanier));
     //on récupère les info de l'API
     await fetch('http://localhost:3000/api/teddies/'+ idPanier)
     .then((response) => response.json())

@@ -48,33 +48,9 @@ function extraireIdCommande(reponseAPI) {
     return array;
 }
 
-//avec les info de l'API, on rempli un formulaire invisible
-function remplirFormulaireFantome(reponseAPI) {
-    const infoAEnvoyer = extraireIdCommande(reponseAPI);
-    const Input = document.getElementById('idcommande');
-    const Input2 = document.getElementById('total');
-    Input.setAttribute('value', infoAEnvoyer[0]);
-    Input2.setAttribute('value', infoAEnvoyer[1]);
-    console.log('le formulaire est rempli');
-    return true;
-}
-
-//on transmet avec la method GET les info à la page de confirmation
-function validerFormulaireFantome(booleen) {
-    if (booleen) {
-        const form = document.getElementById('form-fantome');
-        console.log(form);
-        form.submit();
-    } else {
-        console.log('le formulaire est vide')
-    }
-}
-//a la place du formulaire fantome on fait plus propre :
 function redirectionPageConfirmation(reponseAPI) {
     const infoAEnvoyer = extraireIdCommande(reponseAPI);
     const newUrl = window.location.origin + '/pagesHTML/page_confirmation.html?idcommande=' + infoAEnvoyer[0] + '&total=' + infoAEnvoyer[1];
-    console.log(newUrl);
-    debugger;
     window.location = newUrl;
 }
 //on envoie le tout à l'API
@@ -85,7 +61,7 @@ async function requeteNouvelleCommandeAPI(info) {
         headers: {
             'Content-Type': 'application/json'
             },
-        body: false
+        body: info
     })
     .then(async response => response.json())
     .then(ApiResponse => redirectionPageConfirmation(ApiResponse))
@@ -99,13 +75,6 @@ function envoyerCommande() {
 }
 
 //vérification du formulaire
-const regexNom = new RegExp(/^[A-Z][A-Za-zÀ-ÿ-]*$/);
-const regexMail = new RegExp(/^\S*[^\.\s]@[^\.\s]+\.{1}[^\.\s]\S+[^\.\s]$/);
-const regexPostal = new RegExp(/^[\wÀ-ÿ][\s\wÀ-ÿ,-]*[\wÀ-ÿ]$/);
-const regexVille = new RegExp(/^[a-zA-ZÀ-ÿ][a-zA-ZÀ-ÿ\s-]*[a-zA-ZÀ-ÿ]$/);
-
-const classeFormulaire = ['firstname', 'lastname', 'email', 'adresse', 'ville'];
-
 function checkFormulaire(classe, test) {
     const inputAChecker = document.getElementById(classe);
     const regexTesteur = test;
@@ -120,6 +89,11 @@ function checkFormulaire(classe, test) {
 const buttonValider = document.getElementById('btn-valide-commande');
 buttonValider.addEventListener('click', function(event) {
     event.preventDefault();
+    const regexNom = new RegExp(/^[A-Z][A-Za-zÀ-ÿ-]*$/);
+    const regexMail = new RegExp(/^\S*[^\.\s]@[^\.\s]+\.{1}[^\.\s]\S+[^\.\s]$/);
+    const regexPostal = new RegExp(/^[\wÀ-ÿ][\s\wÀ-ÿ,-]*[\wÀ-ÿ]$/);
+    const regexVille = new RegExp(/^[a-zA-ZÀ-ÿ][a-zA-ZÀ-ÿ\s-]*[a-zA-ZÀ-ÿ]$/);
+    const classeFormulaire = ['firstname', 'lastname', 'email', 'adresse', 'ville'];
     if (!checkFormulaire(classeFormulaire[0], regexNom) ||
         !checkFormulaire(classeFormulaire[1], regexNom) ||
         !checkFormulaire(classeFormulaire[2], regexMail) ||

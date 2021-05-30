@@ -5,18 +5,25 @@ function adresseIdUnique(){
     const urlParams = new URLSearchParams(queryString);
     //on récupère l'ID voulue via :
     const idProduit = urlParams.get('id');
-    const adresseOursonUnique = 'http://localhost:3000/api/teddies/' + idProduit;
-    return adresseOursonUnique;
+    if (idProduit == null) {
+        console.log("l'id n'est pas valide");
+        return false;
+    } else {
+        const adresseOursonUnique = 'http://localhost:3000/api/teddies/' + idProduit;
+        return adresseOursonUnique;
+    }
 }
+
+//fonctions pour afficher les nombres avec 2 décimales
+function financial(number){
+    return Number.parseFloat(number).toFixed(2);
+}
+
 //fonctions pour afficher les informations du produit
 function afficherNom(produits){
     const contenant = document.getElementById('titre_ourson');
     let titre = produits.name;
     contenant.textContent = titre;
-}
-//fonctions pour afficher les nombres avec 2 décimales
-function financial(number){
-    return Number.parseFloat(number).toFixed(2);
 }
 
 function afficherPrix(produits){
@@ -48,16 +55,24 @@ function listerStyleNounours(produits){
 }
 //on regroupe le tout
 function extraireUnOursonDeLaBDD(produits){
-    afficherNom(produits);
-    afficherPrix(produits);
-    afficherDescription(produits);
-    afficherPhotoDesNounours(produits);
-    listerStyleNounours(produits);
+    if (produits == null) {
+        alert('le produit sélectionné est inconnu au bataillon');
+    } else {
+        afficherNom(produits);
+        afficherPrix(produits);
+        afficherDescription(produits);
+        afficherPhotoDesNounours(produits);
+        listerStyleNounours(produits);
+    }
 }
 async function fillProducts(){
-    await fetch(adresseIdUnique())
-    .then((response) => response.json())
-    .then((nounours) => extraireUnOursonDeLaBDD(nounours))
+    if (!adresseIdUnique()) {
+        console.log("l'adresse de l'API n'est pas correcte");
+    } else {
+        await fetch(adresseIdUnique())
+        .then((response) => response.json())
+        .then((nounours) => extraireUnOursonDeLaBDD(nounours))
+    }
 };
 //Et on déclenche le tout:
 fillProducts();

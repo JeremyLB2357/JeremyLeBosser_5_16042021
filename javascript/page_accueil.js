@@ -1,5 +1,6 @@
 // 1) une fonction qui créé la structure voulue
-function creerCarteProduit(contenant) {
+function creerCarteProduit() {
+    const contenant = document.getElementById('liste_produits');
     //on créé le contenant "carte_porduit"
     const newDiv = document.createElement("div");
     contenant.appendChild(newDiv);
@@ -25,12 +26,10 @@ function financial(number){
     return Number.parseFloat(number).toFixed(2);
 }
 function afficherNomEtPrixNounours(produits) {
-    //on va chercher le contenant
-    const contenant = document.getElementById('liste_produits');
     // pour chaque produit, donc on fait une boucle
     let x = 0;
     for (let i in produits){
-        creerCarteProduit(contenant);
+        creerCarteProduit();
         let Titre = produits[i].name;
         let contenantTitre = document.getElementsByClassName('carte_text_titre');
         contenantTitre[x].textContent = Titre;

@@ -14,7 +14,12 @@ function recupererPrixEtId() {
     const contenantRefCommande = document.getElementById('ref-commande');
     const contenantTotal = document.getElementById('prix-total');
     contenantRefCommande.innerText = array[0];
-    contenantTotal.innerText = financial(array[1] / 100);
+    const regexTotal = new RegExp(/^[1-9][0-9]{4,}$/);
+    if (regexTotal.test(total)) {
+        contenantTotal.innerText = financial(array[1] / 100);
+    } else {
+        contenantTotal.innerText = "il y a un problème avec le prix total, veuiller contacter le SAV"
+    }
 }
 
 recupererPrixEtId();

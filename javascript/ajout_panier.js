@@ -6,7 +6,11 @@ function recuperationId(){
     const urlParams = new URLSearchParams(queryString);
     //on récupère l'ID voulue via :
     const idProduit = urlParams.get('id');
-    return idProduit;
+    if (idProduit == null) {
+        alert("l'article sélectionné est impossible à trouver");
+    } else {
+        return idProduit;
+    }
 }
 
 class objectColorQuantity {
