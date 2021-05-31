@@ -1,15 +1,10 @@
-# Orinoco #
+# Oribear #
 
-This is the back end server for Project 5 of the Junior Web Developer path.
+Voici le projet numéro 5 du parcours Développeur Web d'Openclassrooms.
+La partie Backend a été cloné.
+Ici j'ai développé uniquement le frontend. 
 
-### Prerequisites ###
+Pour pouvoir faire fonctionner le site, il suffit de lancer "node server" dans ce projet.
+Vous pourrez alors accéder à la page d'accueil index.html
 
-You will need to have Node and `npm` installed locally on your machine.
-
-### Installation ###
-
-Clone this repo. From within the project folder, run `npm install`. You 
-can then run the server with `node server`. 
-The server should run on `localhost` with default port `3000`. If the
-server runs on another port for any reason, this is printed to the
-console when the server starts, e.g. `Listening on port 3001`.
+Jérémy LB
