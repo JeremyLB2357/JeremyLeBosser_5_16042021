@@ -1,13 +1,14 @@
 // 1) une fonction qui créé la structure voulue
-function creerCarteProduit(contenant) {
+function creerCarteProduit() {
+    const contenant = document.getElementById('liste_produits');
     //on créé le contenant "carte_porduit"
     const newDiv = document.createElement("div");
     contenant.appendChild(newDiv);
     newDiv.classList.add("col-xs-12", "col-sm-6", "col-md-4", "carte_produit");
     //à l'intérieur, on créé le contenant de l'image
-    const newDiv2 = document.createElement("div");
-    newDiv.appendChild(newDiv2);
-    newDiv2.classList.add("row", "carte_image");
+    const newLink = document.createElement("a");
+    newDiv.appendChild(newLink);
+    newLink.classList.add("row", "carte_image");
     //ensuite on créé le paragraphe contenant le titre et le prix
     const newParagraph = document.createElement("p");
     newDiv.appendChild(newParagraph);
@@ -26,12 +27,10 @@ function financial(number){
 }
 
 function afficherNomEtPrixNounours(produits) {
-    //on va chercher le contenant
-    const contenant = document.getElementById('liste_produits');
     // pour chaque produit, donc on fait une boucle
     let x = 0;
     for (let i in produits){
-        creerCarteProduit(contenant);
+        creerCarteProduit();
         let Titre = produits[i].name;
         let contenantTitre = document.getElementsByClassName('carte_text_titre');
         contenantTitre[x].textContent = Titre;
@@ -41,7 +40,8 @@ function afficherNomEtPrixNounours(produits) {
         x++;
     }
 }
-function afficherPhotoDesNounours(produits){
+
+function afficherPhotoLienNounours(produits){
     //on va chercher les contenant des produits
     const contenantImage = document.getElementsByClassName('carte_image');
     //pour chaque contenant, on ajoute les images
@@ -51,12 +51,18 @@ function afficherPhotoDesNounours(produits){
         contenantImage[i].appendChild(image);
         //on modifie l'attribut de cette image pour aller chercher la bonne image
         image.setAttribute("src", produits[i].imageUrl);
+        //on définit le lien vers la page produit
+        const lienPageProduit = './pagesHTML/page_produit.html?id=' + produits[i]._id;
+        //on assigne un lien au contenant de l'image
+        contenantImage[i].setAttribute("href", lienPageProduit);
     }
 }
+
 function afficherListeProduits(produits){
     afficherNomEtPrixNounours(produits);
-    afficherPhotoDesNounours(produits);
+    afficherPhotoLienNounours(produits);
 }
+
 async function fillProducts(){
     await fetch('http://localhost:3000/api/teddies')
     .then((response) => response.json())

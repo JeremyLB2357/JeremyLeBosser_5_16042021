@@ -20,3 +20,14 @@ footer {
 .carte_image {
     transform: rotate(5deg);
 }
+.btn {
+    background-color: $primary-color !important;
+    width: 200px !important;
+}
+.article {
+    border: $primary-color solid 2px;
+}
+a {
+    text-decoration: none;
+    color: white;
+}
