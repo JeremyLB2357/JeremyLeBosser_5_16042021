@@ -53,6 +53,7 @@ function listerStyleNounours(produits){
         newOption.textContent = styleDispo[i];
     }
 }
+
 //on regroupe le tout
 function extraireUnOursonDeLaBDD(produits){
     if (produits == null) {

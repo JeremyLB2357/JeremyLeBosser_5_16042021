@@ -14,6 +14,7 @@ function afficherPanierVide() {
         contenantMessage.innerText = 'Votre panier est vide';
     }
 }
+
 function creerStructureArticle() {
     creerElement('liste-articles', 'div', 'article', 'row', 'm-2');
     creerElement('article', 'div', 'col', 'article_description');
@@ -25,6 +26,7 @@ function creerStructureArticle() {
     creerElement('article_choix', 'p', 'article_quantite');
     creerElement('article_choix', 'p', 'article_prix');
 }
+
 let prixTotal = 0;
 
 function financial(number){

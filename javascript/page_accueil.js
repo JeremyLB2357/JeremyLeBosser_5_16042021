@@ -25,6 +25,7 @@ function creerCarteProduit() {
 function financial(number){
     return Number.parseFloat(number).toFixed(2);
 }
+
 function afficherNomEtPrixNounours(produits) {
     // pour chaque produit, donc on fait une boucle
     let x = 0;
@@ -39,6 +40,7 @@ function afficherNomEtPrixNounours(produits) {
         x++;
     }
 }
+
 function afficherPhotoLienNounours(produits){
     //on va chercher les contenant des produits
     const contenantImage = document.getElementsByClassName('carte_image');
@@ -55,10 +57,12 @@ function afficherPhotoLienNounours(produits){
         contenantImage[i].setAttribute("href", lienPageProduit);
     }
 }
+
 function afficherListeProduits(produits){
     afficherNomEtPrixNounours(produits);
     afficherPhotoLienNounours(produits);
 }
+
 async function fillProducts(){
     await fetch('http://localhost:3000/api/teddies')
     .then((response) => response.json())
