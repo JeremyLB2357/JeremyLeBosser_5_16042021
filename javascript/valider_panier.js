@@ -63,8 +63,14 @@ async function requeteNouvelleCommandeAPI(info) {
             },
         body: info
     })
-    .then(async response => response.json())
+    .then(response => {
+        if (response.ok) {
+            return response.json();
+        } else {
+            throw new Error('il y a une erreur');
+        }})
     .then(ApiResponse => redirectionPageConfirmation(ApiResponse))
+    .catch(error => console.log(error))
 }
 
 function envoyerCommande() {

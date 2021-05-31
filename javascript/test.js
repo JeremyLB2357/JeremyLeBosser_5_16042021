@@ -1,20 +1,32 @@
-function financial(number){
-    return Number.parseFloat(number).toFixed(2);
+let ensembleId = ['test1', 'test2', 'test3'];
+
+function IsRealId (idTested) {
+    for (let i in ensembleId) {
+        if (idTested == ensembleId[i]) {
+            return true;
+        }
+    }
+    return false;
 }
 
-function recupererPrixEtId() {
-    //on récupère les données de l'Url via :
-    const queryString = window.location.search;
-    //on fragmente les paramètres de l'Url via :
-    const urlParams = new URLSearchParams(queryString);
-    //on récupère l'ID voulue via :
-    const idProduit = urlParams.get('idcommande');
-    const total = urlParams.get('total');
-    const array = [idProduit, total];
-    const contenantRefCommande = document.getElementById('ref-commande');
-    const contenantTotal = document.getElementById('prix-total');
-    contenantRefCommande.innerText = array[0];
-    contenantTotal.innerText = financial(array[1] / 100);
+const button = document.getElementById('btn');
+button.addEventListener('click', function() {
+    const valeurTest = document.getElementById('firstname').value;
+    console.log(valeurTest);
+    console.log(IsRealId(valeurTest));
+})
+
+function putAllIdInArray(responseAPI) {
+    for (let i in responseAPI) {
+        ensembleId.push(responseAPI[i]._id)
+    }
+    console.log(ensembleId);
 }
 
-recupererPrixEtId();
+async function fillIdProduct(){
+    await fetch('http://localhost:3000/api/teddies')
+    .then((response) => response.json())
+    .then((ids) => putAllIdInArray(ids))
+};
+
+fillIdProduct();

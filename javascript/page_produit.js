@@ -65,14 +65,19 @@ function extraireUnOursonDeLaBDD(produits){
         listerStyleNounours(produits);
     }
 }
+
 async function fillProducts(){
-    if (!adresseIdUnique()) {
-        console.log("l'adresse de l'API n'est pas correcte");
-    } else {
-        await fetch(adresseIdUnique())
-        .then((response) => response.json())
-        .then((nounours) => extraireUnOursonDeLaBDD(nounours))
-    }
+    await fetch(adresseIdUnique())
+    .then((response) => {
+        if (response.ok) {
+            return response.json();
+        } else {
+            alert("le produit sélectionné est inconnu au bataillon, veuillez retourner à la page d'accueil");
+            throw new Error('il y a une erreur');
+        }
+    })
+    .then((nounours) => extraireUnOursonDeLaBDD(nounours))
+    .catch(error => console.log(error))
 };
 //Et on déclenche le tout:
 fillProducts();

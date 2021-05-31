@@ -14,7 +14,8 @@ function recupererPrixEtId() {
     const contenantRefCommande = document.getElementById('ref-commande');
     const contenantTotal = document.getElementById('prix-total');
     contenantRefCommande.innerText = array[0];
-    const regexTotal = new RegExp(/^[1-9][0-9]{4,}$/);
+    const regexTotal = new RegExp(/^[1-9][0-9]{3,}$/);
+    console.log(regexTotal.test(total));
     if (regexTotal.test(total)) {
         contenantTotal.innerText = financial(array[1] / 100);
     } else {

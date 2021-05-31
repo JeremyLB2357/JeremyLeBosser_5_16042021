@@ -80,11 +80,37 @@ function addToCart(idProduit){
         window.localStorage.setItem(idProduit, JSON.stringify(arrayQuantityAndColor));
     }
 }
+//on créé un ensemble d'Id pour vérifier que l'ajout au panier est possible
+let ensembleId = [];
+
+function putAllIdInArray(responseAPI) {
+    for (let i in responseAPI) {
+        ensembleId.push(responseAPI[i]._id)
+    }
+    console.log(ensembleId);
+}
+
+async function fillIdProduct(){
+    await fetch('http://localhost:3000/api/teddies')
+    .then((response) => response.json())
+    .then((ids) => putAllIdInArray(ids))
+};
+
+function IsRealId (idTested) {
+    for (let i in ensembleId) {
+        if (idTested == ensembleId[i]) {
+            return true;
+        }
+    }
+    return false;
+}
+
+fillIdProduct();
 
 const buttonAddToCart = document.getElementById('btn-addtocart');
 buttonAddToCart.addEventListener('click', function(){
     const quantityInput = document.getElementById('quantity').value;
-    if (verificationQuantity(quantityInput)) {
+    if (verificationQuantity(quantityInput) && IsRealId(recuperationId())) {
         addToCart(recuperationId());
         alert("L'article a bien été ajouté au panier!");
     } else {
