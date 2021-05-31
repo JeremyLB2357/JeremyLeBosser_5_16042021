@@ -87,7 +87,6 @@ function putAllIdInArray(responseAPI) {
     for (let i in responseAPI) {
         ensembleId.push(responseAPI[i]._id)
     }
-    console.log(ensembleId);
 }
 
 async function fillIdProduct(){
