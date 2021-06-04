@@ -61,12 +61,14 @@ function afficherPhotoLienNounours(produits){
 function afficherListeProduits(produits){
     afficherNomEtPrixNounours(produits);
     afficherPhotoLienNounours(produits);
+    console.log(produits);
 }
 
 async function fillProducts(){
     await fetch('http://localhost:3000/api/teddies')
     .then((response) => response.json())
     .then((nounourses) => afficherListeProduits(nounourses))
+    .catch(() => console.log("pb"))
 };
 
 fillProducts();

@@ -3,7 +3,11 @@
 function recuperationPanier() {
     let arrayIdPanier = [];
     for (let i=0; i < window.localStorage.length; i++) {
-        arrayIdPanier.push(window.localStorage.key(i));
+        const product = window.localStorage.key(i);
+        const quantityProduct = JSON.parse(window.localStorage.getItem(product))[0].quantity;
+        for (let x=0; x < quantityProduct; x++) {
+           arrayIdPanier.push(product); 
+        }
     }
     return arrayIdPanier;
 }
@@ -95,19 +99,23 @@ function checkFormulaire(classe, test) {
 const buttonValider = document.getElementById('btn-valide-commande');
 buttonValider.addEventListener('click', function(event) {
     event.preventDefault();
-    const regexNom = new RegExp(/^[A-Z][A-Za-zÀ-ÿ-]*$/);
-    const regexMail = new RegExp(/^\S*[^\.\s]@[^\.\s]+\.{1}[^\.\s]\S+[^\.\s]$/);
-    const regexPostal = new RegExp(/^[\wÀ-ÿ][\s\wÀ-ÿ,-]*[\wÀ-ÿ]$/);
-    const regexVille = new RegExp(/^[a-zA-ZÀ-ÿ][a-zA-ZÀ-ÿ\s-]*[a-zA-ZÀ-ÿ]$/);
-    const classeFormulaire = ['firstname', 'lastname', 'email', 'adresse', 'ville'];
-    if (!checkFormulaire(classeFormulaire[0], regexNom) ||
-        !checkFormulaire(classeFormulaire[1], regexNom) ||
-        !checkFormulaire(classeFormulaire[2], regexMail) ||
-        !checkFormulaire(classeFormulaire[3], regexPostal) ||
-        !checkFormulaire(classeFormulaire[4], regexVille)) {
-        alert('le formulaire est faux');
+    if (window.localStorage.key(0) == null){
+        alert('votre panier est vide');
     } else {
-        console.log('le formulaire est valide');
-        envoyerCommande();
+        const regexNom = new RegExp(/^[A-Z][A-Za-zÀ-ÿ-]*$/);
+        const regexMail = new RegExp(/^\S*[^\.\s]@[^\.\s]+\.{1}[^\.\s]\S+[^\.\s]$/);
+        const regexPostal = new RegExp(/^[\wÀ-ÿ][\s\wÀ-ÿ,-]*[\wÀ-ÿ]$/);
+        const regexVille = new RegExp(/^[a-zA-ZÀ-ÿ][a-zA-ZÀ-ÿ\s-]*[a-zA-ZÀ-ÿ]$/);
+        const classeFormulaire = ['firstname', 'lastname', 'email', 'adresse', 'ville'];
+        if (!checkFormulaire(classeFormulaire[0], regexNom) ||
+            !checkFormulaire(classeFormulaire[1], regexNom) ||
+            !checkFormulaire(classeFormulaire[2], regexMail) ||
+            !checkFormulaire(classeFormulaire[3], regexPostal) ||
+            !checkFormulaire(classeFormulaire[4], regexVille)) {
+            alert('le formulaire est faux');
+        } else {
+            console.log('le formulaire est valide');
+            envoyerCommande();
+        }
     }
 });
